@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- The classic look of the VpnHood app as an inert asset package: the images, the country flags,
+	     the fonts, the content documents and the words of every language, as one zip, plus the
+	     MSBuild XML that places it where the consuming app's platform reads files. No source, no
+	     assembly (IncludeBuildOutput=false), no dependencies: a store of bytes, not a library, so
+	     nothing in a codebase can take a reference on it by accident. Reading it is the consumer's:
+	     the Toolkit's ZipAssetProvider extracts "assets/ui.zip" once and serves its entries by
+	     name, to the app's own UI and to its web host.
+
+	     What it carries:
+	       ui.zip                          the files, packed from assets/ beside it by _zip-assets.ps1
+	       buildTransitive/<PackageId>.targets  places the zip, at any reference depth
+	       build/<PackageId>.targets            forwards to the above for a direct PackageReference
+
+	     A head of the app repo imports build/<PackageId>.targets directly - a project reference
+	     carries no targets - so what our heads test is what a package consumer gets. Another brand
+	     is another store of this shape with its own bytes, pointed at by its own submodule.
+
+	     PUBLISHED BY HAND, from _publish.ps1 beside this file, and NOT by the app repo's nuget
+	     workflow: the version this store ships under trails the libraries - it changes when the look
+	     changes, not when the code does - and IsPackable=false below is what keeps it out of
+	     pub/lib/Publish-NugetPackages.ps1's sweep. _publish.ps1 overrides it for the one pack it
+	     runs. -->
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<PackageId>VpnHood.AppUi.Assets.Classic</PackageId>
+		<Description>The classic look of the VpnHood app as an inert asset package: the images, flags, fonts, documents and the words of every language as files, plus MSBuild targets that place them beside the consuming app. No compiled code, so Android carries them once rather than once per CPU architecture.</Description>
+		<IsPackable>false</IsPackable>
+
+		<!-- Emit no assembly into the package and nothing to symbolize; compile no stray files; and do
+		     not fabricate a dependencies group (there are none). -->
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<IncludeSymbols>false</IncludeSymbols>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<!-- Content-only package: silence the "no lib/ assemblies" advisory, and the compiler's own
+		     complaint that a project with no source has no source. -->
+		<NoWarn>$(NoWarn);NU5128;CS2008</NoWarn>
+	</PropertyGroup>
+
+	<!-- The entire payload, as an explicit allowlist of exactly what ships. -->
+	<ItemGroup>
+		<None Include="ui.zip" Pack="true" PackagePath="ui.zip" />
+		<None Include="buildTransitive\VpnHood.AppUi.Assets.Classic.targets" Pack="true" PackagePath="buildTransitive\" />
+		<None Include="build\VpnHood.AppUi.Assets.Classic.targets" Pack="true" PackagePath="build\" />
+	</ItemGroup>
+
+	<!-- The failure this guards against is a silent one: with no ui.zip on disk the None item above
+	     matches nothing, pack SUCCEEDS, and the package installs a targets file that places a file
+	     that is not in it - a consuming head that builds green and starts with no images and no
+	     words. Pack is the only build that must have the store; a plain build of this project does
+	     not, which is why the check hangs off GenerateNuspec and not off BeforeBuild. -->
+	<Target Name="VhRequireAssetsZip" BeforeTargets="GenerateNuspec">
+		<Error Condition="!Exists('$(MSBuildProjectDirectory)\ui.zip')"
+		       Text="There is no ui.zip to pack. Run _zip-assets.ps1 beside this project first." />
+	</Target>
+</Project>

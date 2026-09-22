@@ -1,0 +1,5 @@
+# This repository is a store of bytes: what is committed is what ships, and ui.zip is packed from
+# the working tree. Git must not rewrite line endings on the way in or out - a clone on Windows
+# would otherwise pack different bytes than a clone on Linux, and every app would see a different
+# store version (ZipAssetProvider keys its extraction on the zip's hash).
+* -text

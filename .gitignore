@@ -1,0 +1,9 @@
+# Build leftovers of the packaging project. The package's payload - assets/ and ui.zip - is
+# committed on purpose: this repo IS the store, and a consumer must be able to clone and build it
+# without running anything first.
+bin/
+obj/
+
+/.idea/
+/.vs
+.DS_Store
