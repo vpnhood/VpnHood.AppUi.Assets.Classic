@@ -5,7 +5,7 @@ draws, and the words of every language. A store of bytes with no code in it, shi
 that the package's MSBuild targets place beside the consuming app.
 
 This repository is that store. It is a **git submodule** of
-[vpnhood/VpnHood](https://github.com/vpnhood/VpnHood) at `src/AppUi/Assets/Classic`, so a checkout of
+[vpnhood/VpnHood](https://github.com/vpnhood/VpnHood) at `src/AppUi/VpnHood.AppUi.Assets.Classic`, so a checkout of
 the app carries the look it is built with, pinned to a commit — and a fork that wants its own look
 points that submodule at its own store instead.
 
@@ -65,7 +65,7 @@ across while that repo lives:
 
 ```powershell
 cd <Vh>/VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa; npm run build
-cd <Vh>/VpnHood/src/AppUi/Assets/Classic; ./_sync-assets.ps1
+cd <Vh>/VpnHood/src/AppUi/VpnHood.AppUi.Assets.Classic; ./_sync-assets.ps1
 ```
 
 The icon font is the one thing that is not a plain copy: the web UI's build cuts Material Design

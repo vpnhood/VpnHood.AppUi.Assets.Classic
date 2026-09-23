@@ -11,7 +11,7 @@
 # Run it after a bump, or whenever the look changes:
 #
 #   cd <Vh>/VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa; npm run build
-#   cd <Vh>/VpnHood/src/AppUi/Assets/Classic; ./_sync-assets.ps1; ./_publish.ps1
+#   cd <Vh>/VpnHood/src/AppUi/VpnHood.AppUi.Assets.Classic; ./_sync-assets.ps1; ./_publish.ps1
 #
 # The version is the product version in pub/PubVersion.json, the same one the libraries carry, so a
 # consumer pins one number for everything. Consumers of the package: the SPA repo's sample heads
@@ -23,7 +23,7 @@ param(
 	[switch]$noPush
 );
 
-. "$PSScriptRoot/../../../../pub/lib/Common.ps1"
+. "$PSScriptRoot/../../../pub/lib/Common.ps1"
 
 $projectFile = Join-Path $PSScriptRoot "VpnHood.AppUi.Assets.Classic.csproj";
 $zipFile = Join-Path $PSScriptRoot "ui.zip";

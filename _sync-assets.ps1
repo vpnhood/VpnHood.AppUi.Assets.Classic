@@ -15,7 +15,7 @@
 #                         than a listing, because a provider answers by name and never enumerates
 #   ui.zip        <- assets/, by _zip-assets.ps1: the store as the package's targets place it
 #                         (assets/ui.zip) and ZipAssetProvider extracts it, its hash its version
-#   ../../Common/Strings.g.cs   one member per key of en.json - the C# side of the words, which
+#   ../VpnHood.AppUi.Common/Strings.g.cs   one member per key of en.json - the C# side of the words, which
 #                         belongs to the app repo's services module, not to this store. Written only
 #                         when this store sits in that checkout as a submodule; skipped otherwise.
 #
@@ -35,8 +35,8 @@ param(
 $ErrorActionPreference = "Stop";
 
 if ($WebUiDir -eq "") {
-    # <Vh>/VpnHood/src/AppUi/Assets/Classic -> <Vh>
-    $vhFolder = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../../../.."));
+    # <Vh>/VpnHood/src/AppUi/VpnHood.AppUi.Assets.Classic -> <Vh>
+    $vhFolder = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../../.."));
     $WebUiDir = Join-Path $vhFolder "VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa";
 }
 $builtAssetsDir = Join-Path $WebUiDir "dist/assets";
@@ -44,7 +44,7 @@ $localesDir = Join-Path $WebUiDir "src/locales";
 $assetsDir = Join-Path $PSScriptRoot "assets";
 $assetLocalesDir = Join-Path $assetsDir "locales";
 $zipPath = Join-Path $PSScriptRoot "ui.zip";
-$stringsFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../../Common/Strings.g.cs"));
+$stringsFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../VpnHood.AppUi.Common/Strings.g.cs"));
 $hasAppRepo = Test-Path (Split-Path $stringsFile -Parent);
 $utf8 = New-Object System.Text.UTF8Encoding($false);
 
