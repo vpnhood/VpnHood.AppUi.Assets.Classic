@@ -24,7 +24,6 @@
 	     runs. -->
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
-		<PackageId>VpnHood.AppUi.Assets.Classic</PackageId>
 		<Description>The classic look of the VpnHood app as an inert asset package: the images, flags, fonts, documents and the words of every language as files, plus MSBuild targets that place them beside the consuming app. No compiled code, so Android carries them once rather than once per CPU architecture.</Description>
 		<IsPackable>false</IsPackable>
 
