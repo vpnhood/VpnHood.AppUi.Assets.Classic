@@ -21,7 +21,7 @@
 	     the zip - CI checks out code only, until the store is a submodule - places nothing and does
 	     not fail; a UI that needs the store says so when it starts. -->
 	<PropertyGroup>
-		<VhAssetsZip>$(MSBuildThisFileDirectory)..\ui.zip</VhAssetsZip>
+		<VhAssetsZip>$(MSBuildThisFileDirectory)ui.zip</VhAssetsZip>
 		<!-- "Is this an app?" is not one property. A .NET for Android APP declares OutputType Exe and
 		     the Android SDK REWRITES it to Library - the app is a .dll packaged into an APK - so an
 		     OutputType test alone silently places nothing on the one platform that needs it most.

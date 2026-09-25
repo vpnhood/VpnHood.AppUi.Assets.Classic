@@ -26,7 +26,7 @@ param(
 . "$PSScriptRoot/../../../pub/lib/Common.ps1"
 
 $projectFile = Join-Path $PSScriptRoot "VpnHood.AppUi.Assets.Classic.csproj";
-$zipFile = Join-Path $PSScriptRoot "ui.zip";
+$zipFile = Join-Path $PSScriptRoot "buildTransitive/ui.zip";
 $outDir = Join-Path $pubDir "bin/nuget-assets";
 
 # The store must exist AND be newer than what it was built from. A published package with a stale

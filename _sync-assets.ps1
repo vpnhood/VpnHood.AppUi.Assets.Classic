@@ -13,8 +13,8 @@
 #                         the tray icons per theme (default, connect), read by AppBranding in AppLib
 #   assets/locales/index.json, assets/fonts/index.json   the languages, the faces: a list rather
 #                         than a listing, because a provider answers by name and never enumerates
-#   ui.zip        <- assets/, by _zip-assets.ps1: the store as the package's targets place it
-#                         (assets/ui.zip) and ZipAssetProvider extracts it, its hash its version
+#   buildTransitive/ui.zip  <- assets/, by _zip-assets.ps1: the store as the package's targets
+#                         place it (assets/ui.zip) and ZipAssetProvider extracts it, its hash its version
 #   ../VpnHood.AppUi.Common/Strings.g.cs   one member per key of en.json - the C# side of the words, which
 #                         belongs to the app repo's services module, not to this store. Written only
 #                         when this store sits in that checkout as a submodule; skipped otherwise.
@@ -43,7 +43,6 @@ $builtAssetsDir = Join-Path $WebUiDir "dist/assets";
 $localesDir = Join-Path $WebUiDir "src/locales";
 $assetsDir = Join-Path $PSScriptRoot "assets";
 $assetLocalesDir = Join-Path $assetsDir "locales";
-$zipPath = Join-Path $PSScriptRoot "ui.zip";
 $stringsFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../VpnHood.AppUi.Common/Strings.g.cs"));
 $hasAppRepo = Test-Path (Split-Path $stringsFile -Parent);
 $utf8 = New-Object System.Text.UTF8Encoding($false);

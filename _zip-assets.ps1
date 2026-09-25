@@ -11,7 +11,7 @@
 $ErrorActionPreference = "Stop";
 
 $assetsDir = Join-Path $PSScriptRoot "assets";
-$zipPath = Join-Path $PSScriptRoot "ui.zip";
+$zipPath = Join-Path $PSScriptRoot "buildTransitive/ui.zip";
 if (!(Test-Path $assetsDir)) { throw "There is no assets folder beside this script. $assetsDir"; }
 
 Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem;
@@ -29,4 +29,4 @@ try {
 }
 finally { $zip.Dispose(); }
 
-Write-Host "Zipped $($files.Count) files into ui.zip ($([math]::Round((Get-Item $zipPath).Length / 1MB, 1)) MB).";
+Write-Host "Zipped $($files.Count) files into buildTransitive/ui.zip ($([math]::Round((Get-Item $zipPath).Length / 1MB, 1)) MB).";

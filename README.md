@@ -23,7 +23,7 @@ nothing can depend on it by accident; the rule is about the reference itself.
 | Part | What it is | Who reads it |
 |---|---|---|
 | `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `content/`, `locales/`, `branding/` | nothing at run time — it is the source of `ui.zip` |
-| `ui.zip` | the same files as one archive, which is what ships | `ZipAssetProvider` in `VpnHood.Core.Toolkit`, which extracts it once per version (its hash) under the app's storage |
+| `buildTransitive/ui.zip` | the same files as one archive, which is what ships; beside the targets, so that one path finds it in the package and in this repo alike | `ZipAssetProvider` in `VpnHood.Core.Toolkit`, which extracts it once per version (its hash) under the app's storage |
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
 | `assets/branding/<theme>/manifest.json` and the tray icons it names | the look the OS chrome draws with — window and bar colours, tray icons — one per look (`blue`, `violet`) | `AppBranding` in `VpnHood.AppLib.App`, for the theme the head names (`AppOptions.UiTheme`) |
@@ -43,7 +43,7 @@ after a clone nothing can tell a stale zip from a fresh one:
 
 ```powershell
 # edit assets/images/... , assets/locales/en.json , ...
-./_zip-assets.ps1        # rebuilds ui.zip from assets/
+./_zip-assets.ps1        # rebuilds buildTransitive/ui.zip from assets/
 git commit -am "..."     # both
 ```
 

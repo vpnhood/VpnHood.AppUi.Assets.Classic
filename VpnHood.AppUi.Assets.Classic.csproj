@@ -9,7 +9,9 @@
 	     name, to the app's own UI and to its web host.
 
 	     What it carries:
-	       ui.zip                          the files, packed from assets/ beside it by _zip-assets.ps1
+	       buildTransitive/ui.zip               the files, packed from assets/ by _zip-assets.ps1, beside
+	                                            the targets so that one path finds them in the package
+	                                            and in this repo alike
 	       buildTransitive/<PackageId>.targets  places the zip, at any reference depth, a direct one
 	                                            included; no build/ copy, which only NuGet before 5.0
 	                                            would read
@@ -42,7 +44,7 @@
 
 	<!-- The entire payload, as an explicit allowlist of exactly what ships. -->
 	<ItemGroup>
-		<None Include="ui.zip" Pack="true" PackagePath="ui.zip" />
+		<None Include="buildTransitive\ui.zip" Pack="true" PackagePath="buildTransitive\" />
 		<None Include="buildTransitive\VpnHood.AppUi.Assets.Classic.targets" Pack="true" PackagePath="buildTransitive\" />
 	</ItemGroup>
 
@@ -52,7 +54,7 @@
 	     words. Pack is the only build that must have the store; a plain build of this project does
 	     not, which is why the check hangs off GenerateNuspec and not off BeforeBuild. -->
 	<Target Name="VhRequireAssetsZip" BeforeTargets="GenerateNuspec">
-		<Error Condition="!Exists('$(MSBuildProjectDirectory)\ui.zip')"
-		       Text="There is no ui.zip to pack. Run _zip-assets.ps1 beside this project first." />
+		<Error Condition="!Exists('$(MSBuildProjectDirectory)\buildTransitive\ui.zip')"
+		       Text="There is no buildTransitive\ui.zip to pack. Run _zip-assets.ps1 beside this project first." />
 	</Target>
 </Project>
