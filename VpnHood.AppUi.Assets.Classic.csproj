@@ -10,12 +10,13 @@
 
 	     What it carries:
 	       ui.zip                          the files, packed from assets/ beside it by _zip-assets.ps1
-	       buildTransitive/<PackageId>.targets  places the zip, at any reference depth
-	       build/<PackageId>.targets            forwards to the above for a direct PackageReference
+	       buildTransitive/<PackageId>.targets  places the zip, at any reference depth, a direct one
+	                                            included; no build/ copy, which only NuGet before 5.0
+	                                            would read
 
-	     A head of the app repo imports build/<PackageId>.targets directly - a project reference
-	     carries no targets - so what our heads test is what a package consumer gets. Another brand
-	     is another store of this shape with its own bytes, pointed at by its own submodule.
+	     A head of the app repo imports buildTransitive/<PackageId>.targets directly - a project
+	     reference carries no targets - so what our heads test is what a package consumer gets. Another
+	     brand is another store of this shape with its own bytes, pointed at by its own submodule.
 
 	     PUBLISHED BY HAND, from _publish.ps1 beside this file, and NOT by the app repo's nuget
 	     workflow: the version this store ships under trails the libraries - it changes when the look
@@ -43,7 +44,6 @@
 	<ItemGroup>
 		<None Include="ui.zip" Pack="true" PackagePath="ui.zip" />
 		<None Include="buildTransitive\VpnHood.AppUi.Assets.Classic.targets" Pack="true" PackagePath="buildTransitive\" />
-		<None Include="build\VpnHood.AppUi.Assets.Classic.targets" Pack="true" PackagePath="build\" />
 	</ItemGroup>
 
 	<!-- The failure this guards against is a silent one: with no ui.zip on disk the None item above

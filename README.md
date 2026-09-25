@@ -27,8 +27,7 @@ nothing can depend on it by accident; the rule is about the reference itself.
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
 | `assets/branding/<theme>/manifest.json` and the tray icons it names | the look the OS chrome draws with — window and bar colours, tray icons — one per look (`blue`, `violet`) | `AppBranding` in `VpnHood.AppLib.App`, for the theme the head names (`AppOptions.UiTheme`) |
-| `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth | the app's build |
-| `build/*.targets` | forwards to the above for a direct package reference; the heads of the app repo import it | the app's build |
+| `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth, a direct one included; the heads of the app repo import it | the app's build |
 
 The indexes exist because nothing lists: a provider answers by name, and a page in a browser could
 not enumerate a folder.
@@ -86,7 +85,7 @@ skips it, and `_publish.ps1` overrides that for the one pack it runs; the projec
 `VhRequireAssetsZip` target fails a pack outright if `ui.zip` is missing, because such a package
 would install cleanly and start a head with no images and no words.
 
-The heads in the app repo do not go through the package at all: they import `build/*.targets`
+The heads in the app repo do not go through the package at all: they import `buildTransitive/*.targets`
 directly from this folder, so they always show the store as it is on disk. The consumers of the
 **package** are heads built outside that repo.
 

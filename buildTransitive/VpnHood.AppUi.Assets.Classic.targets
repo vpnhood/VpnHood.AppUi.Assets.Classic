@@ -8,10 +8,10 @@
 
 	     This file lives in buildTransitive/, not build/, on purpose: NuGet imports build/<PackageId>
 	     .targets only for a DIRECT PackageReference, while buildTransitive/<PackageId>.targets reaches
-	     a consumer at any depth - an app that references a UI that references this package gets the
-	     zip without naming it. build/<PackageId>.targets imports this one, so a direct reference runs
-	     the same file; the heads of this repo import that one too, a project reference carrying no
-	     targets.
+	     a consumer at any depth, a direct one included - an app that references a UI that references
+	     this package gets the zip without naming it. There is no build/ copy: beside this file, one
+	     would be read only by NuGet before 5.0, which we don't support. The app repo's heads import
+	     this file directly, a project reference carrying no targets.
 
 	     Placed by an APP's build, never a library's: OutputType is the test below, because a library
 	     that merely passes the reference along has no use for a copy of the zip in bin.
