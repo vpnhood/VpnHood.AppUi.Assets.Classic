@@ -59,7 +59,7 @@ if ($noPush) {
 }
 
 if ([string]::IsNullOrWhiteSpace($nugetApiKey)) {
-	throw "NuGet API key is missing. Put it in .user/nuget_api_key.txt.";
+	throw "NuGet API key is missing. Put it in .user/vendors/nuget/nuget_api_key.txt.";
 }
 if ($prerelease) {
 	Write-Host "PubVersion.json says this version is a PRERELEASE." -ForegroundColor Yellow;
