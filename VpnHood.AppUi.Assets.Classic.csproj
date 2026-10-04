@@ -1,4 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<!-- TreatAsLocalProperty: the app repo's pack passes IncludeSymbols=true to every project, and a symbols
+     package of nothing fails the whole pack (NU5017); this one has no assembly, so its own false wins. -->
+<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="IncludeSymbols">
 
 	<!-- The classic look of the VpnHood app as an inert asset package: the images, the country flags,
 	     the fonts, the content documents and the words of every language, as one zip, plus the
@@ -20,15 +22,11 @@
 	     reference carries no targets - so what our heads test is what a package consumer gets. Another
 	     brand is another store of this shape with its own bytes, pointed at by its own submodule.
 
-	     PUBLISHED BY HAND, from _publish.ps1 beside this file, and NOT by the app repo's nuget
-	     workflow: the version this store ships under trails the libraries - it changes when the look
-	     changes, not when the code does - and IsPackable=false below is what keeps it out of
-	     pub/lib/Publish-NugetPackages.ps1's sweep. _publish.ps1 overrides it for the one pack it
-	     runs. -->
+	     Published with the libraries and at their version, by the app repo's NuGet workflow
+	     (publish_nugets.yml), which checks this submodule out at the commit the app repo pins. -->
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<Description>The classic look of the VpnHood app as an inert asset package: the images, flags, fonts, documents and the words of every language as files, plus MSBuild targets that place them beside the consuming app. No compiled code, so Android carries them once rather than once per CPU architecture.</Description>
-		<IsPackable>false</IsPackable>
 
 		<!-- Emit no assembly into the package and nothing to symbolize; compile no stray files; and do
 		     not fabricate a dependencies group (there are none). -->

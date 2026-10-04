@@ -73,17 +73,12 @@ cut. Adding an icon means adding it there and mirroring again.
 
 ## Publishing the package
 
-Pushed **by hand**, from `_publish.ps1`:
-
-```powershell
-./_zip-assets.ps1; ./_publish.ps1
-```
-
-The version is the product version in the app repo's `pub/PubVersion.json`, so it can trail the
-libraries by a release or two. `IsPackable` is `false` in the project so the app repo's nuget sweep
-skips it, and `_publish.ps1` overrides that for the one pack it runs; the project's
-`VhRequireAssetsZip` target fails a pack outright if `ui.zip` is missing, because such a package
-would install cleanly and start a head with no images and no words.
+The app repo's NuGet workflow (`publish_nugets.yml` in vpnhood/VpnHood) publishes it with the
+libraries and at their version, from the commit the app repo's submodule pointer names. So a change
+here ships with the next library release once `./_zip-assets.ps1` has rebuilt `buildTransitive/ui.zip`,
+it is committed and pushed, and the app repo's pointer has moved. The project's `VhRequireAssetsZip`
+target fails a pack outright if `ui.zip` is missing, because such a package would install cleanly and
+start a head with no images and no words.
 
 The heads in the app repo do not go through the package at all: they import `buildTransitive/*.targets`
 directly from this folder, so they always show the store as it is on disk. The consumers of the
