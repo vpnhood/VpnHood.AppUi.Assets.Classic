@@ -34,11 +34,13 @@
 	</PropertyGroup>
 
 	<!-- Android: one entry in base/assets of the package, which is not split by CPU architecture.
-	     The folder's name twice on purpose: .NET for Android takes a leading assets\ in the link as
-	     the package's asset root and drops it, and the file must keep its folder under that root,
-	     so the asset is "assets/ui.zip" - the path the app asks for. -->
+	     The link starts with the project's own assets folder, which .NET for Android takes as the
+	     package's asset root and drops - Assets in an Android project, Platforms\Android\Assets in a
+	     MAUI one - and the file keeps its folder under that root, so the asset is "assets/ui.zip" -
+	     the path the app asks for. The folder is read in the item, not in a property above: the SDK
+	     or MAUI may set it after this file, and items are evaluated after every property. -->
 	<ItemGroup Condition="'$(VhAssetsIsAndroidApp)' == 'true' And Exists('$(VhAssetsZip)')">
-		<AndroidAsset Include="$(VhAssetsZip)" Link="assets\assets\ui.zip" Visible="false" />
+		<AndroidAsset Include="$(VhAssetsZip)" Link="$(MonoAndroidAssetsPrefix)\assets\ui.zip" Visible="false" />
 	</ItemGroup>
 
 	<!-- iOS and tvOS: a file of the app bundle, read in place. -->
