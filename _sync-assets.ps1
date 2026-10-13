@@ -71,6 +71,13 @@ Copy-Item $brandingDir (Join-Path $assetsDir "branding") -Recurse;
 $adVideo = Join-Path $assetsDir "images/internal-ad.mp4";
 if (Test-Path $adVideo) { Remove-Item $adVideo -Force; }
 
+# Not the premium corners: the web UI's own page art. The native home shows a premium session in the
+# connection circle's gold instead, so this store dropped them; the web UI keeps its copies.
+foreach ($name in @("premium-bg-left.webp", "premium-bg-right.webp")) {
+    $corner = Join-Path $assetsDir "images/$name";
+    if (Test-Path $corner) { Remove-Item $corner -Force; }
+}
+
 # a JSON array of names, by hand: ConvertTo-Json turns a one-element array into a bare string
 function ConvertTo-JsonArray([string[]] $names) {
     return "[" + (($names | ForEach-Object { "`"$_`"" }) -join ",") + "]";
@@ -93,6 +100,10 @@ Write-Host "Listed $($fontFiles.Count) fonts in assets/fonts/index.json.";
 & (Join-Path $PSScriptRoot "_zip-assets.ps1");
 
 # ---- Strings.g.cs: one member per key of en.json ----
+if (!$hasAppRepo) {
+    Write-Host "No app repo around this store: Strings.g.cs left alone.";
+    return;
+}
 $english = [System.IO.File]::ReadAllText((Join-Path $assetLocalesDir "en.json"), $utf8) | ConvertFrom-Json;
 
 function Get-MemberName([string] $key) {
