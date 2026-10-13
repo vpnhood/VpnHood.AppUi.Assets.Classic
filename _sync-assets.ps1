@@ -9,8 +9,8 @@
 #                         icon font in it is cut to the icons both UIs name, by the web UI's own build
 #                         (build/icon-font-plugin.ts), so `npm run build` there comes first
 #   assets/locales/    <- <WebUI>/src/locales/*.json - the words, one file per language
-#   assets/branding/   <- <WebUI>/dist/branding - the look the OS chrome draws with: a manifest and
-#                         the tray icons per theme (default, connect), read by AppBranding in AppLib
+#   assets/branding/   <- <WebUI>/dist/branding - the colours the OS chrome draws with: a manifest per
+#                         theme, read by AppBranding in AppLib; not the tray icons the web UI writes too
 #   assets/locales/index.json, assets/fonts/index.json   the languages, the faces: a list rather
 #                         than a listing, because a provider answers by name and never enumerates
 #   buildTransitive/ui.zip  <- assets/, by _zip-assets.ps1: the store as the package's targets
@@ -64,6 +64,17 @@ foreach ($folder in $folders) {
 $brandingDir = Join-Path $WebUiDir "dist/branding";
 if (!(Test-Path $brandingDir)) { throw "The web UI's build has no branding folder. $brandingDir"; }
 Copy-Item $brandingDir (Join-Path $assetsDir "branding") -Recurse;
+
+# Not the tray icons: the tray draws the app's own icon, from its build, with the connection's badge
+# (AvaloniaDesktopTray), so a theme's manifest names its colours alone. The icons go, and so does the
+# manifest's list of them, cut from its text so the rest keeps its form.
+foreach ($manifestFile in @(Get-ChildItem (Join-Path $assetsDir "branding") -Recurse -Filter "manifest.json")) {
+    Get-ChildItem $manifestFile.DirectoryName -Filter "*.ico" | Remove-Item -Force;
+    $manifest = [System.IO.File]::ReadAllText($manifestFile.FullName, $utf8);
+    $manifest = [regex]::Replace($manifest, ',\s*"icons"\s*:\s*\{[^{}]*\}', "");
+    if ($manifest -match '"icons"') { throw "The manifest's icons are not where this script cuts them. $($manifestFile.FullName)"; }
+    [System.IO.File]::WriteAllText($manifestFile.FullName, $manifest, $utf8);
+}
 
 # Not the film: the internal ad is a fallback that exactly one head can show (Connect.Android.Google),
 # and that head carries it from the product's own repo (Vpnhood.App.Connect/promotions) as its own
