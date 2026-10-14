@@ -9,8 +9,9 @@
 #                         icon font in it is cut to the icons both UIs name, by the web UI's own build
 #                         (build/icon-font-plugin.ts), so `npm run build` there comes first
 #   assets/locales/    <- <WebUI>/src/locales/*.json - the words, one file per language
-#   assets/branding/   <- <WebUI>/dist/branding - the colours the OS chrome draws with: a manifest per
-#                         theme, read by AppBranding in AppLib; not the tray icons the web UI writes too
+#   assets/branding/   <- <WebUI>/dist/branding - the colours the native chrome around the web UI draws
+#                         with: a manifest per theme, read by the web view hosts' AppBranding; not the
+#                         tray icons the web UI writes too
 #   assets/locales/index.json, assets/fonts/index.json   the languages, the faces: a list rather
 #                         than a listing, because a provider answers by name and never enumerates
 #   buildTransitive/ui.zip  <- assets/, by _zip-assets.ps1: the store as the package's targets
