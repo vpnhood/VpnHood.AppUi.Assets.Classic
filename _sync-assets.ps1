@@ -9,9 +9,9 @@
 #                         icon font in it is cut to the icons both UIs name, by the web UI's own build
 #                         (build/icon-font-plugin.ts), so `npm run build` there comes first
 #   assets/locales/    <- <WebUI>/src/locales/*.json - the words, one file per language
-#   assets/branding/   <- <WebUI>/dist/branding - the colours the native chrome around the web UI draws
-#                         with: a manifest per theme, read by the web view hosts' AppBranding; not the
-#                         tray icons the web UI writes too
+#   assets/themes/     <- <WebUI>/dist/themes - each theme's colours for what the UI cannot draw, the
+#                         native chrome around it and the app's launch screen: a manifest per theme,
+#                         read by ThemeColors and the app's build; not the tray icons the web UI writes too
 #   assets/locales/index.json, assets/fonts/index.json   the languages, the faces: a list rather
 #                         than a listing, because a provider answers by name and never enumerates
 #   buildTransitive/ui.zip  <- assets/, by _zip-assets.ps1: the store as the package's targets
@@ -62,14 +62,14 @@ foreach ($folder in $folders) {
 }
 
 # ---- the look: one theme per product, beside the built assets rather than under them ----
-$brandingDir = Join-Path $WebUiDir "dist/branding";
-if (!(Test-Path $brandingDir)) { throw "The web UI's build has no branding folder. $brandingDir"; }
-Copy-Item $brandingDir (Join-Path $assetsDir "branding") -Recurse;
+$themesDir = Join-Path $WebUiDir "dist/themes";
+if (!(Test-Path $themesDir)) { throw "The web UI's build has no themes folder. $themesDir"; }
+Copy-Item $themesDir (Join-Path $assetsDir "themes") -Recurse;
 
 # Not the tray icons: the tray draws the app's own icon, from its build, with the connection's badge
 # (AvaloniaDesktopTray), so a theme's manifest names its colours alone. The icons go, and so does the
 # manifest's list of them, cut from its text so the rest keeps its form.
-foreach ($manifestFile in @(Get-ChildItem (Join-Path $assetsDir "branding") -Recurse -Filter "manifest.json")) {
+foreach ($manifestFile in @(Get-ChildItem (Join-Path $assetsDir "themes") -Recurse -Filter "manifest.json")) {
     Get-ChildItem $manifestFile.DirectoryName -Filter "*.ico" | Remove-Item -Force;
     $manifest = [System.IO.File]::ReadAllText($manifestFile.FullName, $utf8);
     $manifest = [regex]::Replace($manifest, ',\s*"icons"\s*:\s*\{[^{}]*\}', "");

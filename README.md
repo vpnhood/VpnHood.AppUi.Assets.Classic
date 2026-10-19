@@ -22,11 +22,11 @@ nothing can depend on it by accident; the rule is about the reference itself.
 
 | Part | What it is | Who reads it |
 |---|---|---|
-| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `content/`, `locales/`, `branding/` | nothing at run time — it is the source of `ui.zip` |
+| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `content/`, `locales/`, `themes/` | nothing at run time — it is the source of `ui.zip` |
 | `buildTransitive/ui.zip` | the same files as one archive, which is what ships; beside the targets, so that one path finds it in the package and in this repo alike | `ZipAssetProvider` in `VpnHood.Core.Toolkit`, which extracts it once per version (its hash) under the app's storage |
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
-| `assets/branding/<theme>/manifest.json` | the colours the native chrome around the web UI draws with — the window's and the bars' — one per look (`blue`, `violet`), since a page cannot colour it; the Avalonia UI paints its chrome from its own palette, and the tray draws the app's own icon | `AppBranding` in `VpnHood.AppUi.Hosting.WebView`, for the theme the head names (`AppOptions.UiTheme`) |
+| `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | `ThemeColors` in `VpnHood.AppUi.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's build, for its launch screen |
 | `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth, a direct one included; the heads of the app repo import it | the app's build |
 
 The indexes exist because nothing lists: a provider answers by name, and a page in a browser could
