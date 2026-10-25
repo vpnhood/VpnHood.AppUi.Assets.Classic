@@ -230,6 +230,8 @@
   "SELECTED_PLAN_ALREADY_SUBSCRIBED": "The selected plan is already subscribed. You can choose another plan to change your current subscription.",
   "SIGN_IN_CANCELED_BY_USER": "To purchase a subscription, you need to sign in. If you wish, please proceed again.",
   "CANCEL_ANYTIME_IN_STORE": "Cancel anytime in your store's subscription settings.",
+  "AUTOMATIC_UPDATES": "Automatic Updates",
+  "AUTOMATIC_UPDATES_DESC": "Keeps the app up to date by itself. Updates install while the VPN is disconnected.",
   "ALWAYS_ON": "Always On",
   "ALWAYS_ON_COLORED": "Always <span class=\"text-promote-premium-color-premium\">On</span>",
   "ALWAYS_ON_DESC": "Keeps device connected to the VPN at all times, even after restarts or network changes.",
