@@ -14,6 +14,7 @@
   "DISCONNECT": "Disconnect",
   "DISCONNECTED": "Disconnected",
   "DISCONNECTING": "Disconnecting",
+  "UPDATING": "Updating",
   "STOP_DIAGNOSING": "Stop Diagnosing",
   "FINDING_BEST_SERVER": "Finding best server",
   "FINDING_NETWORK": "Finding network",
