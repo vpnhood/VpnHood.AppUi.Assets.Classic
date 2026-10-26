@@ -3,7 +3,9 @@
 #
 # This repository IS the store now, so this script is the bridge back to where these files came
 # from: run it to pull a change across while VpnHood.AppUi.Spa still lives. A change made directly
-# in assets/ needs only _zip-assets.ps1 beside this file.
+# in assets/ needs only _zip-assets.ps1 beside this file - and a new key in en.json Strings.g.cs too,
+# which only this script's last section writes: run that section alone, since the rest would mirror
+# the store back from the web UI.
 #
 #   assets/            <- <WebUI>/dist/assets (images, flags, fonts, content) - the BUILT folder: the
 #                         icon font in it is cut to the icons both UIs name, by the web UI's own build
