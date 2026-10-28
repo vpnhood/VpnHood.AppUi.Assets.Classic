@@ -1,0 +1,10 @@
+{
+  "base": "assets/locales/en.json",
+  "model": "gemini-flash-latest",
+  "batch": 20,
+  "languages": ["ar", "de", "es", "fa", "fr", "hi", "it", "pt-BR", "pt", "ru", "tr", "zh"],
+  "docs": {
+    "source": "assets/content/en",
+    "languages": ["ar", "de", "es", "fa", "fr", "hi", "it", "pt-BR", "pt", "ru", "tr", "zh"]
+  }
+}

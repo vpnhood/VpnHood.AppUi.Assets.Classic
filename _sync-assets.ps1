@@ -1,16 +1,16 @@
-﻿# Brings the classic look's files in from the web UI, where they were authored and built, and packs
-# them into the one file the package places.
+﻿# Brings the classic look's images, flags, fonts and themes in from the web UI, where they were
+# authored and built, and packs the store into the one file the package places.
 #
-# This repository IS the store now, so this script is the bridge back to where these files came
-# from: run it to pull a change across while VpnHood.AppUi.Spa still lives. A change made directly
-# in assets/ needs only _zip-assets.ps1 beside this file - and a new key in en.json Strings.g.cs too,
-# which only this script's last section writes: run that section alone, since the rest would mirror
-# the store back from the web UI.
+# This repository IS the store now, so this script is the bridge back to where those files came
+# from: run it to pull a change across while VpnHood.AppUi.Spa still lives. The words are not among
+# them: they are written and translated here (README, "The words"), and _copy-words-to-web-ui.ps1
+# gives the web UI its copy. A change made directly in assets/ needs only _zip-assets.ps1 beside
+# this file - and a new key in en.json Strings.g.cs too, which only this script's last section
+# writes: run that section alone, since the rest would mirror the look back from the web UI.
 #
-#   assets/            <- <WebUI>/dist/assets (images, flags, fonts, content) - the BUILT folder: the
-#                         icon font in it is cut to the icons both UIs name, by the web UI's own build
+#   assets/            <- <WebUI>/dist/assets (images, flags, fonts) - the BUILT folder: the icon
+#                         font in it is cut to the icons both UIs name, by the web UI's own build
 #                         (build/icon-font-plugin.ts), so `npm run build` there comes first
-#   assets/locales/    <- <WebUI>/src/locales/*.json - the words, one file per language
 #   assets/themes/     <- <WebUI>/dist/themes - each theme's colours for what the UI cannot draw, the
 #                         native chrome around it and the app's launch screen: a manifest per theme,
 #                         read by ThemeColors and the app's build
@@ -22,8 +22,9 @@
 #                         belongs to the app repo's services module, not to this store. Written only
 #                         when this store sits in that checkout as a submodule; skipped otherwise.
 #
-# Everything is mirrored (a file gone there is gone here). Both assets/ and ui.zip are committed
-# here, so review what this changes before committing it.
+# Those four folders are mirrored (a file gone there is gone here); the words, assets/locales/ and
+# assets/content/, are left as they are. Both assets/ and ui.zip are committed here, so review what
+# this changes before committing it.
 #
 # Every file is read and written with an explicit UTF-8 encoding: Windows PowerShell would
 # otherwise read these files as ANSI and double-encode every non-ASCII word in them. Paths use
@@ -43,7 +44,6 @@ if ($WebUiDir -eq "") {
     $WebUiDir = Join-Path $vhFolder "VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa";
 }
 $builtAssetsDir = Join-Path $WebUiDir "dist/assets";
-$localesDir = Join-Path $WebUiDir "src/locales";
 $assetsDir = Join-Path $PSScriptRoot "assets";
 $assetLocalesDir = Join-Path $assetsDir "locales";
 $stringsFile = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "../VpnHood.AppUi.Common/Strings.g.cs"));
@@ -51,22 +51,22 @@ $hasAppRepo = Test-Path (Split-Path $stringsFile -Parent);
 $utf8 = New-Object System.Text.UTF8Encoding($false);
 
 if (!(Test-Path $builtAssetsDir)) { throw "The web UI has not been built (npm run build in $WebUiDir). $builtAssetsDir"; }
-if (!(Test-Path $localesDir)) { throw "The web UI's locales are not there. $localesDir"; }
 
-# ---- the files: a mirror of the built folder ----
-$folders = @("images", "flags", "fonts", "content");
-if (Test-Path $assetsDir) { Remove-Item $assetsDir -Recurse -Force; }
-New-Item -ItemType Directory $assetsDir | Out-Null;
-foreach ($folder in $folders) {
+# ---- the files: a mirror of the built folder, but for the words, which are written here ----
+foreach ($folder in @("images", "flags", "fonts")) {
     $source = Join-Path $builtAssetsDir $folder;
     if (!(Test-Path $source)) { throw "The built assets folder has no '$folder' folder. $source"; }
-    Copy-Item $source (Join-Path $assetsDir $folder) -Recurse;
+    $target = Join-Path $assetsDir $folder;
+    if (Test-Path $target) { Remove-Item $target -Recurse -Force; }
+    Copy-Item $source $target -Recurse;
 }
 
 # ---- the look: one theme per product, beside the built assets rather than under them ----
 $themesDir = Join-Path $WebUiDir "dist/themes";
 if (!(Test-Path $themesDir)) { throw "The web UI's build has no themes folder. $themesDir"; }
-Copy-Item $themesDir (Join-Path $assetsDir "themes") -Recurse;
+$assetThemesDir = Join-Path $assetsDir "themes";
+if (Test-Path $assetThemesDir) { Remove-Item $assetThemesDir -Recurse -Force; }
+Copy-Item $themesDir $assetThemesDir -Recurse;
 
 # Not the film: the internal ad is a fallback that exactly one head can show (Connect.Android.Google),
 # and that head carries it from the product's own repo (Vpnhood.App.Connect/promotions) as its own
@@ -86,12 +86,10 @@ function ConvertTo-JsonArray([string[]] $names) {
     return "[" + (($names | ForEach-Object { "`"$_`"" }) -join ",") + "]";
 }
 
-# ---- the words: a mirror of the locale files, and the list of them ----
-New-Item -ItemType Directory $assetLocalesDir | Out-Null;
-$localeFiles = @(Get-ChildItem $localesDir -Filter "*.json" | Sort-Object Name);
-foreach ($file in $localeFiles) { Copy-Item $file.FullName $assetLocalesDir; }
+# ---- the words: written here, not mirrored - only the list of them ----
+$localeFiles = @(Get-ChildItem $assetLocalesDir -Filter "*.json" | Where-Object { $_.Name -ne "index.json" } | Sort-Object Name);
 [System.IO.File]::WriteAllText((Join-Path $assetLocalesDir "index.json"), (ConvertTo-JsonArray @($localeFiles | ForEach-Object { $_.BaseName })), $utf8);
-Write-Host "Copied $($localeFiles.Count) locale files to assets/locales/.";
+Write-Host "Listed $($localeFiles.Count) languages in assets/locales/index.json.";
 
 # ---- the fonts: the list of faces, since the collection is built by name ----
 $fontsDir = Join-Path $assetsDir "fonts";
@@ -128,7 +126,7 @@ function Get-DocText([string] $text) {
 $builder = New-Object System.Text.StringBuilder;
 [void]$builder.AppendLine("// <auto-generated>");
 [void]$builder.AppendLine("//     Written by _sync-assets.ps1 from assets/locales/en.json. Do not edit by hand:");
-[void]$builder.AppendLine("//     the words live in the web UI's locale files, and this file follows them.");
+[void]$builder.AppendLine("//     the words live in VpnHood.AppUi.Assets.Classic's locale files, and this file follows them.");
 [void]$builder.AppendLine("// </auto-generated>");
 [void]$builder.AppendLine("");
 [void]$builder.AppendLine("namespace VpnHood.AppUi.Common;");

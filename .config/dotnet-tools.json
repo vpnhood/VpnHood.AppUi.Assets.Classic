@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "vpnhood.tools.resourcetranslator": {
+      "version": "1.3.3",
+      "commands": [
+        "vhtranslator"
+      ],
+      "rollForward": false
+    }
+  }
+}
