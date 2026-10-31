@@ -57,24 +57,27 @@ submodule.
 
 The words of every language — `assets/locales/<culture>.json` and the documents in
 `assets/content/<culture>/` — are written and translated here and nowhere else; English is the
-source. Translate every new or changed English string by hand, into all 12 languages, before the
-commit: by `vh_translator/prompt.txt` and the language's own prompt in `vh_translator/prompts/`,
-and in the form the translator writes — `en.json`'s key order, two-space JSON, CRLF, no final
-newline; a document LF, with its front matter (`title`, `translate_prompt`, `lang`,
-`auto_translated: true`). A fix that follows a rule — a name, a term, the register — goes in that
-language's prompt too. Then point the watches at the English the translations follow, so the
-translator has nothing left to do:
+source. Translate every new or changed English string by hand first, into every language you can,
+before the commit: by `vh_translator/prompt.txt` and the language's own prompt in
+`vh_translator/prompts/`, and in the form the translator writes — `en.json`'s key order, two-space
+JSON, CRLF, no final newline; a document LF, with its front matter (`title`, `translate_prompt`,
+`lang`, `auto_translated: true`). A fix that follows a rule — a name, a term, the register — goes in
+that language's prompt too.
+
+`vhtranslator` translates what was missed. A language not translated by hand must not keep its old
+text: take the key out of that file (a document: delete that language's copy), since
+`--ignore-changes` marks every changed key as translated, and a missing key is always translated but
+a stale one is not. Then point the watches at the English the translations follow, and let the
+translator fill in what is missing (it needs `GEMINI_API_KEY`; skip those two runs when nothing is):
 
 ```powershell
 dotnet tool restore
 dotnet tool run vhtranslator -- --ignore-changes         # the locale files
 dotnet tool run vhtranslator -- docs --ignore-changes    # the documents
+dotnet tool run vhtranslator                             # the missing keys
+dotnet tool run vhtranslator -- docs                     # the missing documents
 dotnet tool run vhtranslator -- --show-changes           # 0 changed keys (docs --show-changes: 0 documents)
 ```
-
-`vhtranslator` itself is only the fallback, for a key left out on purpose — and such a key must be
-missing from the target file, since a missing key is always translated but a stale one is not once
-the watches are current.
 
 The web UI carries a copy of the words: `./_copy-words-to-web-ui.ps1` writes them into its
 `src/locales` and `src/content`. Commit the copy there as well, and never edit it there.
