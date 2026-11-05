@@ -22,11 +22,13 @@ nothing can depend on it by accident; the rule is about the reference itself.
 
 | Part | What it is | Who reads it |
 |---|---|---|
-| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `content/`, `locales/`, `themes/` | nothing at run time — it is the source of `ui.zip` |
+| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `browser-fonts/`, `content/`, `locales/`, `themes/` | nothing at run time — it is the source of `ui.zip` |
 | `buildTransitive/ui.zip` | the same files as one archive, which is what ships; beside the targets, so that one path finds it in the package and in this repo alike | `ZipAssetProvider` in `VpnHood.Net.Toolkit`, which extracts it once per version (its hash) under the app's storage |
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
 | `vh_translator/`, `.config/dotnet-tools.json` | the translator's setup for the words: its config, each language's prompt (the names and terms it keeps) and the watches (the English each translation was made from); the tool's version | `vhtranslator`, run by hand — see "The words" |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
+| `assets/browser-fonts/*.ttf`, `browser-fonts/index.json` | the faces only a browser page loads, cut by `_cut-browser-fonts.py`: Russian and Chinese, which an app draws with its OS's fonts and no browser lends a page | `AppAssets` in the Avalonia UI, on a browser page alone |
+| `_cut-browser-fonts.py`, `font_cut/` | the cut of those two faces, and the Chinese country names it must hold | run by hand — see "The words" |
 | `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | `ThemeColors` in `VpnHood.AppUi.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's build, for its launch screen |
 | `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth, a direct one included; the heads of the app repo import it | the app's build |
 
@@ -82,6 +84,18 @@ dotnet tool run vhtranslator -- --show-changes           # 0 changed keys (docs 
 The web UI carries a copy of the words: `./_copy-words-to-web-ui.ps1` writes them into its
 `src/locales` and `src/content`. Commit the copy there as well, and never edit it there.
 
+A browser page draws only with the faces it is handed, so a new word may need a new cut. After any
+change to the words, before `./_zip-assets.ps1`:
+
+```powershell
+pip install fonttools        # once
+python _cut-browser-fonts.py # fails on a word no face can draw
+```
+
+It holds the words' and the country names' Chinese and the 3,755 common characters of GB2312 level
+1, for what a user types. A rarer character a user types draws as a box, though the text under it
+is what was typed. A run that changes nothing leaves the files as they were.
+
 ## Where these files come from
 
 The images, flags, fonts and themes were authored and built in
@@ -94,7 +108,9 @@ cd <Vh>/VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa; npm run bu
 cd <Vh>/VpnHood/src/AppUi/VpnHood.AppUi.Assets.Classic; ./_sync-assets.ps1
 ```
 
-The words go the other way: they are written here, and the web UI takes its copy from here.
+The words go the other way: they are written here, and the web UI takes its copy from here. So do
+`assets/browser-fonts/`, cut here from Noto Sans and Noto Sans SC under the SIL Open Font License, the
+licence and copyright being in each face's name table; the mirror leaves that folder alone.
 
 The icon font is the one thing that is not a plain copy: the web UI's build cuts Material Design
 Icons down to the icons the UIs actually name, and `assets/fonts/MaterialDesignIcons.ttf` is that
