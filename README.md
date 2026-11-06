@@ -27,6 +27,7 @@ nothing can depend on it by accident; the rule is about the reference itself.
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
 | `vh_translator/`, `.config/dotnet-tools.json` | the translator's setup for the words: its config, each language's prompt (the names and terms it keeps) and the watches (the English each translation was made from); the tool's version | `vhtranslator`, run by hand — see "The words" |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
+| `_cut-icon-font.py` | the cut of `assets/fonts/MaterialDesignIcons.ttf` to the icons the UI names | run by hand — see "The icon font" |
 | `assets/browser-fonts/*.ttf`, `browser-fonts/index.json` | the faces only a browser page loads, cut by `_cut-browser-fonts.py`: Russian and Chinese, which an app draws with its OS's fonts and no browser lends a page | `AppAssets` in the Avalonia UI, on a browser page alone |
 | `_cut-browser-fonts.py`, `font_cut/` | the cut of those two faces, and the Chinese country names it must hold | run by hand — see "The words" |
 | `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | `ThemeColors` in `VpnHood.AppUi.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's build, for its launch screen |
@@ -53,7 +54,8 @@ git commit -am "..."     # both
 Changing `assets/locales/en.json` also changes the C# side of the words: `Strings.g.cs` in
 `VpnHood.AppUi.Common` has one member per key of that file, and it lives in the app repo because it
 is code. `_sync-assets.ps1` writes it, into the parent checkout when this repo is used as a
-submodule.
+submodule, along with the lists of languages and faces and the zip; there it also fails on an image
+the UI names that is not in `assets/images`.
 
 ## The words
 
@@ -81,9 +83,6 @@ dotnet tool run vhtranslator -- docs                     # the missing documents
 dotnet tool run vhtranslator -- --show-changes           # 0 changed keys (docs --show-changes: 0 documents)
 ```
 
-The web UI carries a copy of the words: `./_copy-words-to-web-ui.ps1` writes them into its
-`src/locales` and `src/content`. Commit the copy there as well, and never edit it there.
-
 A browser page draws only with the faces it is handed, so a new word may need a new cut. After any
 change to the words, before `./_zip-assets.ps1`:
 
@@ -96,25 +95,20 @@ It holds the words' and the country names' Chinese and the 3,755 common characte
 1, for what a user types. A rarer character a user types draws as a box, though the text under it
 is what was typed. A run that changes nothing leaves the files as they were.
 
-## Where these files come from
+## The icon font
 
-The images, flags, fonts and themes were authored and built in
-[vpnhood/VpnHood.AppUi.Spa](https://github.com/vpnhood/VpnHood.AppUi.Spa), the web UI this look was
-first drawn for, and are mirrored here by `_sync-assets.ps1` — which is still the way to pull a
-change to them across while that repo lives:
+`assets/fonts/MaterialDesignIcons.ttf` is Material Design Icons cut down to the icons the UI names,
+by their code points in `Mdi.cs` (`VpnHood.AppUi.Common`). An icon left out of the cut is a blank box,
+so a new one goes in `Mdi.cs`, and then, with this repo in the app's checkout:
 
 ```powershell
-cd <Vh>/VpnHood.AppUi.Spa/src/VpnHood.AppUi.Presentation.Classic.Spa; npm run build
-cd <Vh>/VpnHood/src/AppUi/VpnHood.AppUi.Assets.Classic; ./_sync-assets.ps1
+pip install fonttools   # once
+python _cut-icon-font.py # fails on a code point the font has not
+./_zip-assets.ps1
 ```
 
-The words go the other way: they are written here, and the web UI takes its copy from here. So do
-`assets/browser-fonts/`, cut here from Noto Sans and Noto Sans SC under the SIL Open Font License, the
-licence and copyright being in each face's name table; the mirror leaves that folder alone.
-
-The icon font is the one thing that is not a plain copy: the web UI's build cuts Material Design
-Icons down to the icons the UIs actually name, and `assets/fonts/MaterialDesignIcons.ttf` is that
-cut. Adding an icon means adding it there and mirroring again.
+`assets/browser-fonts/` is cut here too, from Noto Sans and Noto Sans SC under the SIL Open Font
+License, the licence and copyright being in each face's name table ("The words").
 
 ## Publishing the package
 
