@@ -22,14 +22,15 @@ nothing can depend on it by accident; the rule is about the reference itself.
 
 | Part | What it is | Who reads it |
 |---|---|---|
-| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `browser-fonts/`, `content/`, `locales/`, `themes/` | nothing at run time — it is the source of `ui.zip` |
+| `assets/` | the files a person edits: `images/`, `flags/`, `fonts/`, `browser-fonts/`, `content/`, `locales/`, `countries/`, `themes/` | nothing at run time — it is the source of `ui.zip` |
 | `buildTransitive/ui.zip` | the same files as one archive, which is what ships; beside the targets, so that one path finds it in the package and in this repo alike | `ZipAssetProvider` in `VpnHood.Net.Toolkit`, which extracts it once per version (its hash) under the app's storage |
 | `assets/locales/<culture>.json`, `locales/index.json` | the words, one file per language, and the list of languages | `Strings` in `VpnHood.AppUi.Common` |
+| `assets/countries/<language>.json` | each country's name by its code, one file per language | `CountryNames` in `VpnHood.AppUi.Common` |
 | `vh_translator/`, `.config/dotnet-tools.json` | the translator's setup for the words: its config, each language's prompt (the names and terms it keeps) and the watches (the English each translation was made from); the tool's version | `vhtranslator`, run by hand — see "The words" |
 | `assets/fonts/*.ttf`, `fonts/index.json` | the faces, and the list of them | `AppFontCollection` in the Avalonia UI |
 | `_cut-icon-font.py` | the cut of `assets/fonts/MaterialDesignIcons.ttf` to the icons the UI names | run by hand — see "The icon font" |
 | `assets/browser-fonts/*.ttf`, `browser-fonts/index.json` | the faces only a browser page loads, cut by `_cut-browser-fonts.py`: Russian and Chinese, which an app draws with its OS's fonts and no browser lends a page | `AppAssets` in the Avalonia UI, on a browser page alone |
-| `_cut-browser-fonts.py`, `font_cut/` | the cut of those two faces, and the Chinese country names it must hold | run by hand — see "The words" |
+| `_cut-browser-fonts.py` | the cut of those two faces | run by hand — see "The words" |
 | `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | `ThemeColors` in `VpnHood.AppUi.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's build, for its launch screen |
 | `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth, a direct one included; the heads of the app repo import it | the app's build |
 
@@ -94,6 +95,19 @@ python _cut-browser-fonts.py # fails on a word no face can draw
 It holds the words' and the country names' Chinese and the 3,755 common characters of GB2312 level
 1, for what a user types. A rarer character a user types draws as a box, though the text under it
 is what was typed. A run that changes nothing leaves the files as they were.
+
+## The country names
+
+`assets/countries/<language>.json` holds each country's name by its code, as `{ "DE": "Germany" }`, in
+49 languages: more than the words come in, so a fork that adds a language usually finds its names
+here. `CountryNames` reads the file of the language the words are in, falling back from a culture to
+its language (`pt-BR` to `pt`). A country the file leaves out shows in English, and so does every
+country of a language with no file.
+
+They came from [Nager.Country.Translation](https://github.com/nager/Nager.Country) 4.7.1, under the
+MIT licence kept beside them as `assets/countries/LICENSE`. They are edited here, by hand, and
+`vhtranslator` leaves them alone. After a change, `./_zip-assets.ps1`; for a Chinese name,
+`python _cut-browser-fonts.py` before it.
 
 ## The icon font
 

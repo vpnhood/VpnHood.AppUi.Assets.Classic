@@ -10,12 +10,10 @@
 # character outside the cut draws as a box, though the text under it is what was typed. Both are pinned
 # to one weight, which takes about half of what the others would add.
 #
-# Run it after changing any Chinese words - a new character is a box until it is in the cut - then
-# ./_zip-assets.ps1, and commit both. It needs Python with fontTools (pip install fonttools) and fetches
-# the two faces, pinned, into the temp folder; the same words and the same sources make the same bytes.
-#
-# font_cut/zh-country-names.txt is Nager.Country.Translation's names, the ones CountryNames shows, for
-# its version 4.7.1: this repo holds no code, so it cannot ask Nager. A newer Nager may rename a country.
+# Run it after changing any Chinese words or country names - a new character is a box until it is in
+# the cut - then ./_zip-assets.ps1, and commit both. It needs Python with fontTools (pip install
+# fonttools) and fetches the two faces, pinned, into the temp folder; the same words and the same
+# sources make the same bytes.
 #
 # The copyright and licence stay in each face's name table, which is where the OFL lets them live.
 
@@ -34,7 +32,7 @@ from fontTools.varLib import instancer
 ROOT = pathlib.Path(__file__).resolve().parent
 ASSETS = ROOT / "assets"
 TARGET = ASSETS / "browser-fonts"
-COUNTRY_NAMES = ROOT / "font_cut" / "zh-country-names.txt"
+COUNTRY_NAMES = ASSETS / "countries" / "zh.json"
 
 FONTS_REPO = "https://github.com/google/fonts/raw"
 NOTO_SANS = (
