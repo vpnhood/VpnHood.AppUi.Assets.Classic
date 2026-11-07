@@ -3,3 +3,4 @@ Persian (fa):
   Never «ضربه بزنید», «ضربه زدن», or «لمس کنید».
 - Split tunneling → «تونل‌زنی تفکیکی» (never «تونل‌زنی هوشمند» or «تونل تقسیم‌شده»); Split DNS → «DNS تفکیکی».
 - DNS stays Latin, never «دی‌ان‌اس».
+- access key → «کلید دسترسی». ADD_ACCESS_KEY_SUBTITLE alone adds «(کانفیگ VpnHood)» after it, as کانفیگ is what Iranians call such a string: keep it there and add it nowhere else.
