@@ -122,6 +122,10 @@ foreach ($property in $english.PSObject.Properties) {
     else {
         $parameters = ($placeholders | ForEach-Object { "object $_" }) -join ", ";
         $arguments = ($placeholders | ForEach-Object { "(`"$_`", $_)" }) -join ", ";
+        foreach ($placeholder in $placeholders) {
+            [void]$builder.AppendLine("    /// <param name=`"$placeholder`">The value in place of <c>{$placeholder}</c>.</param>");
+        }
+        [void]$builder.AppendLine("    /// <returns>The words, with the values in place.</returns>");
         [void]$builder.AppendLine("    public string $name($parameters) => Get(`"$key`", $arguments);");
     }
     $count++;
