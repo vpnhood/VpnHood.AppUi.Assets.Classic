@@ -2,7 +2,9 @@
 #
 # A page in a browser draws with the faces it is handed and no others: no browser lends it a system
 # font, so the Russian and the Chinese that an app draws with its OS's fonts are boxes there. These two
-# faces stand in for them, and only there (AppAssets), since an app needs neither.
+# faces stand in for them, and only there (AppAssets), since an app needs neither. Serving the page a cut
+# of the device's own system face, made at run time, was built and dropped: an Apple TV lets an app read
+# no system font file, so a cut ships anyway, and one serves every device.
 #
 # Noto Sans goes in with the whole of Cyrillic, which is small. Noto Sans SC is 17 MB whole, so it goes
 # in with the words' and the country names' Chinese and the 3,755 common characters of GB2312 level 1:
