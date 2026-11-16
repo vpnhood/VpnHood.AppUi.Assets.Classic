@@ -31,7 +31,7 @@ nothing can depend on it by accident; the rule is about the reference itself.
 | `_cut-icon-font.py` | the cut of `assets/fonts/MaterialDesignIcons.ttf` to the icons the UI names | run by hand — see "The icon font" |
 | `assets/browser-fonts/*.ttf`, `browser-fonts/index.json` | the faces only a browser page loads, cut by `_cut-browser-fonts.py`: Russian and Chinese, which an app draws with its OS's fonts and no browser lends a page | `AppAssets` in the Avalonia UI, on a browser page alone |
 | `_cut-browser-fonts.py` | the cut of those two faces | run by hand — see "The words" |
-| `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | the hosts, through `ThemeColors` in `VpnHood.AppUi.Hosting.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's web host, for the browser page's loading screen; the app's build, for its launch screen |
+| `assets/themes/<theme>/manifest.json` | each theme's (`blue`, `violet`) colours for what the UI cannot draw: the native chrome around it — the window's and the bars' — and the app's launch screen | the hosts, through `ThemeColors` in `VpnHood.AppHosting.Common`, for the theme the app names (`AppOptions.UiTheme`); the app's web host, for the browser page's loading screen; the app's build, for its launch screen |
 | `buildTransitive/*.targets` | places the zip at `assets/ui.zip` where the consuming app's platform reads files, at any reference depth, a direct one included; the heads of the app repo import it | the app's build |
 
 The indexes exist because nothing lists: a provider answers by name, and a page in a browser could

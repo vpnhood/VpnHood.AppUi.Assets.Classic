@@ -64,7 +64,7 @@ function Get-ImageNames([string] $folder, [string] $pattern) {
         foreach ($match in [regex]::Matches([System.IO.File]::ReadAllText($file.FullName, $utf8), $pattern)) { $match.Groups[1].Value; }
     }
 }
-$uiDir = Join-Path $PSScriptRoot "../VpnHood.AppUi.Presentation.Classic.Avalonia";
+$uiDir = Join-Path $PSScriptRoot "../VpnHood.AppUi.Avalonia.Classic";
 $appsDir = Join-Path $PSScriptRoot "../../Apps";
 $imageNames = @(Get-ImageNames $uiDir '"(?:images/)?([\w.-]+\.(?:webp|png|svg|mp4))"') + @(Get-ImageNames $appsDir '"images/([\w.-]+\.(?:webp|png|svg|mp4))"');
 $missingImages = @($imageNames | Sort-Object -Unique | Where-Object { !(Test-Path (Join-Path $assetsDir "images/$_")) });
