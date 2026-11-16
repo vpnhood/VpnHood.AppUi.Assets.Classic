@@ -5,7 +5,7 @@ draws, and the words of every language. A store of bytes with no code in it, shi
 that the package's MSBuild targets place beside the consuming app.
 
 This repository is that store. It is a **git submodule** of
-[vpnhood/VpnHood](https://github.com/vpnhood/VpnHood) at `src/AppUi/VpnHood.AppUi.Assets.Classic`, so a checkout of
+[vpnhood/VpnHood](https://github.com/vpnhood/VpnHood) at `src/libs/AppUi/VpnHood.AppUi.Assets.Classic`, so a checkout of
 the app carries the look it is built with, pinned to a commit — and a fork that wants its own look
 points that submodule at its own store instead.
 
