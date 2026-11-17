@@ -1,17 +1,17 @@
 ---
-title: "Termos de Uso e Política de Privacidade"
+title: "Termos de utilização e política de privacidade"
 translate_prompt: "Legal disclosure shown on first run. Translate literally and completely; never shorten, simplify, or reword for marketing."
 lang: pt
 auto_translated: true
 ---
-O {appName} é uma VPN que você pode usar sem uma conta. Em resumo:
+O {appName} é uma VPN que pode usar sem uma conta. Em resumo:
 
-- Não registramos sua navegação. Nossos servidores nunca inspecionam seu tráfego em busca dos domínios ou URLs que você visita e nunca registram os endereços para onde suas conexões se dirigem.
-- Para se conectar, o aplicativo envia aos nossos servidores um ID de cliente, o acesso que ele usa, a versão do aplicativo, seu sistema operacional, a localização de servidor que você escolheu e a última avaliação que você deu no aplicativo, se houver. Nós os guardamos junto com a quantidade de tráfego que você usa e o país que identificamos a partir do seu endereço IP, para operar o serviço, fazer cumprir as cotas, evitar abusos e contabilizar o uso do serviço.
-- Seu endereço IP, os horários de conexão e as portas para onde suas conexões se dirigem ficam nos registros do servidor por 30 dias e são usados para encontrar falhas e para atender a denúncias de abuso e notificações de violação de direitos autorais.
-- Exceto em dispositivos Apple, o aplicativo envia ao Google Analytics dados de uso e diagnóstico pseudonimizados, vinculados a um ID de cliente e, no Google Play, ao ID de publicidade do seu dispositivo, nunca ao seu nome ou dados de contato. No EEE, no Reino Unido e na Suíça, e em qualquer lugar na edição da Microsoft Store, ele só faz isso se você marcar a caixa abaixo. Você pode desativar esse envio a qualquer momento em Configurações › Privacidade.
-- O login é opcional; ele só é necessário para comprar ou restaurar uma assinatura. Nesse caso, sua conta guarda seu endereço de e-mail e um histórico dos logins e das alterações dela, com os respectivos endereços IP, até que você a exclua.
-- Dependendo de onde você o instalou, o aplicativo também pode exibir anúncios, enviar relatórios de falhas ou informar de qual link veio uma instalação.
-- Você é responsável pelo que envia pela VPN e não deve usá-la para violar a lei nem para atacar, enviar spam ou prejudicar outras pessoas.
+- Não registamos a sua navegação. Os nossos servidores nunca inspecionam o seu tráfego à procura dos domínios ou URLs que visita e nunca registam os endereços para onde as suas ligações se dirigem.
+- Para se ligar, a app envia aos nossos servidores um ID de cliente, o acesso que esta usa, a versão da app, o seu sistema operativo, a localização de servidor que escolheu e a última avaliação que deu na app, se existir. Guardamo-los juntamente com a quantidade de tráfego que usa e o país que identificamos a partir do seu endereço IP, para operar o serviço, fazer cumprir as quotas, prevenir abusos e contabilizar a forma como o serviço é usado.
+- O seu endereço IP, as horas de ligação e as portas para onde as suas ligações se dirigem ficam nos logs do servidor durante 30 dias e são usados para encontrar falhas e para dar seguimento a denúncias de abuso e a notificações de violação de direitos de autor.
+- Exceto em dispositivos Apple, a app envia ao Google Analytics dados de utilização e de diagnóstico pseudonimizados, associados a um ID de cliente e, no Google Play, ao ID de publicidade do seu dispositivo, nunca ao seu nome nem aos seus dados de contacto. No EEE, no Reino Unido e na Suíça, e em qualquer lugar na edição da Microsoft Store, só o faz se assinalar a caixa abaixo. Pode desativar este envio a qualquer momento em Definições › Privacidade.
+- Iniciar sessão é opcional; só é necessário para comprar ou restaurar uma subscrição. Nesse caso, a sua conta guarda o seu endereço de e-mail e um histórico dos respetivos inícios de sessão e alterações, com os endereços IP correspondentes, até que a elimine.
+- Consoante o local onde a instalou, a app também pode mostrar anúncios, enviar relatórios de falhas ou indicar de que link veio uma instalação.
+- É responsável pelo que envia através da VPN e não a deve usar para infringir a lei nem para atacar, enviar spam ou prejudicar outras pessoas.
 
-Esta página é um resumo. Os documentos completos regem o seu uso do aplicativo:
+Esta página é um resumo. Os documentos completos regem a sua utilização da app:

@@ -1,0 +1,17 @@
+European Portuguese (pt): Portuguese as written in Portugal (AO90 spelling), never Brazilian; Brazil has its own pt-BR.
+- Address the user formally without "você": leave the subject out, use the third person and "o seu / a sua"; never "tu".
+  Buttons and menu items use the infinitive ("Ligar", "Passar a Premium"); messages use the formal imperative ("Toque em Ligar").
+- Ongoing states are "a" + infinitive ("A ligar…"), never the gerund. Labels are in sentence case: only the first word and names take a capital.
+- Names: Connect = Ligar · Connecting = A ligar · Connected = Ligado · Disconnect = Desligar · Settings = Definições ·
+  Subscription = Subscrição · Go Premium = Passar a Premium · Sign in / Sign out = Iniciar sessão / Terminar sessão ·
+  Delete = Eliminar · Save = Guardar · Skip = Saltar · Next = Seguinte · Watch Ad = Ver anúncio · Remote Access = Acesso remoto ·
+  On your phone = No seu telemóvel · Always On = Sempre ligado · Split Tunneling = Túnel dividido · Split Apps = Dividir aplicações.
+- Words: app = app (a app) or aplicação, never aplicativo · file = ficheiro · user = utilizador · password = palavra-passe ·
+  screen = ecrã · phone = telemóvel · download = transferir · share = partilhar · team = equipa · contact = contacto ·
+  connection = ligação · encrypted = encriptado · by default = por predefinição · developer = programador ·
+  remote control = comando · camera = câmara · press = premir · access key = chave de acesso · premium code = código Premium.
+- Quote Android's settings as Android names them in Portugal: "VPN sempre ativa", "Bloquear ligações sem VPN", "DNS privado",
+  "Definições rápidas".
+- Premium keeps its capital (código Premium, servidores Premium). Features = funcionalidades · default = predefinido (never padrão) ·
+  Bad = Mau · Poor = Fraco · Status = Estado · Oops = Ups · only = apenas · order = encomenda · enter (a value) = introduzir ·
+  type = escrever · scan a code = ler · Quick Settings tile = atalho · backup code = código de reserva · Upgrade = Atualizar.
