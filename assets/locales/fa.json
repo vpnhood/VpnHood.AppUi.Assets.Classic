@@ -74,7 +74,7 @@
   "CUSTOM_INCLUDE_LIST_DESC": "فقط ترافیک کشورهای انتخاب شده را از طریق VPN هدایت می‌کند",
   "SLOWER": "آهسته‌تر",
   "PROTOCOLS": "پروتکل‌ها",
-  "PROTOCOL_TITLE": "روش اتصال",
+  "PROTOCOL_TITLE": "پروتکل",
   "PROTOCOL_TUNNEL_TITLE": "پروتکل تونل",
   "PROTOCOL_DESC": "روش انتقال داده‌ها بین دستگاه شما و سرور VPN پس از اتصال.",
   "PROTOCOL_UDP": "UDP",

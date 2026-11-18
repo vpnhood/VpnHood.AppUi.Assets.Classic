@@ -3,5 +3,6 @@ Persian (fa):
   Never «ضربه بزنید», «ضربه زدن», or «لمس کنید».
 - Split tunneling → «تونل‌زنی تفکیکی» (never «تونل‌زنی هوشمند» or «تونل تقسیم‌شده»); Split DNS → «DNS تفکیکی».
 - DNS stays Latin, never «دی‌ان‌اس».
+- Protocol → «پروتکل», the home screen's row too; never «روش اتصال», which PLAN_REJECTED_MSG uses for the way a user connects (free, ad or Premium).
 - access key → «کلید دسترسی». ADD_ACCESS_KEY_SUBTITLE alone adds «(کانفیگ VpnHood)» after it, as کانفیگ is what Iranians call such a string: keep it there and add it nowhere else.
 - Famous names in Persian letters, whatever the shared rules say: Windows → «ویندوز», Linux → «لینوکس», Android → «اندروید», iPhone → «آیفون», iPad → «آیپد», Google → «گوگل», Google Play → «گوگل پلی», Google Analytics → «گوگل آنالیتیکس», App Store → «اپ استور», Apple → «اپل». iOS, GitHub and every other name stay Latin.
