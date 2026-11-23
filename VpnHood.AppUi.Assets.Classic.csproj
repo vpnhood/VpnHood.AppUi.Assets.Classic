@@ -25,7 +25,7 @@
 	     Published with the libraries and at their version, by the app repo's NuGet workflow
 	     (publish_nugets.yml), which checks this submodule out at the commit the app repo pins. -->
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
+		<TargetFramework>net11.0</TargetFramework>
 		<Description>The classic look of the VpnHood app as an inert asset package: the images, flags, fonts, documents and the words of every language as files, plus MSBuild targets that place them beside the consuming app. No compiled code, so Android carries them once rather than once per CPU architecture.</Description>
 
 		<!-- Emit no assembly into the package and nothing to symbolize; compile no stray files; and do
